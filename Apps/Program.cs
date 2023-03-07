@@ -9,7 +9,7 @@ namespace Apps
     {
         static void Main(string[] args)
         {
-
+            Console.WriteLine("Esinimi çok seviyorum.");
 
             Console.ReadKey();
         }
