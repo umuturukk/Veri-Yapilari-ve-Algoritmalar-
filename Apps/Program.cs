@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Collections;
 using System.Net.WebSockets;
+using DataStructures.Tree.BST;
+using DataStructures.Tree.Binary_Tree;
 
 namespace Apps
 {
@@ -9,13 +11,29 @@ namespace Apps
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Esinimi çok seviyorum.");
+            var BST = new DataStructures.Tree.BST.BST<int>(new int[] { 23, 16, 45, 3, 22, 37, 99 });
+
+            var bt = new BinaryTree<int>();
+
+            bt.InOrder(BST.Root)
+                .ForEach(node => Console.Write($"{node, -3} "));
+            Console.WriteLine();
+            bt.ClearList();
+
+            bt.PreOrder(BST.Root)
+                .ForEach(node => Console.Write($"{node,-3} "));
+            Console.WriteLine();
+            bt.ClearList();
+
+            bt.PostOrder(BST.Root)
+                .ForEach(node => Console.Write($"{node,-3} "));
+
 
             Console.ReadKey();
         }
 
 
-       
+
         private static void GenericDiziIslemleri()
         {
             var arr = new DataStructures.Array.Array<int>();

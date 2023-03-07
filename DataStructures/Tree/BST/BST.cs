@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DataStructures.Tree.BinaryTree;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,12 @@ namespace DataStructures.Tree.BST
         {
 
         } // Default constructor
+        public BST(IEnumerable<T> collection) // Eğer bize bir collection geliyorsa, foreach ifadesiyle bu collection'un item'larını add metodu ile ağaca eklemiş olacağız. 
+        // Bu constructor sayesinde henüz ağacın tanımlanma işlemi esnasında bir sayı dizisi vererek oluşturma işlemini gerçekleştirebiliriz.
+        {
+            foreach (var item in collection)            
+                Add(item);       
+        }
         public IEnumerator<T> GetEnumerator()
         {
             throw new NotImplementedException();
