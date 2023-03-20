@@ -17,16 +17,10 @@ namespace Apps
 
             bt.InOrder(BST.Root)
                 .ForEach(node => Console.Write($"{node, -3} "));
+         
             Console.WriteLine();
-            bt.ClearList();
-
-            bt.PreOrder(BST.Root)
-                .ForEach(node => Console.Write($"{node,-3} "));
-            Console.WriteLine();
-            bt.ClearList();
-
-            bt.PostOrder(BST.Root)
-                .ForEach(node => Console.Write($"{node,-3} "));
+            bt.InOrderNonRecursiveTraversal(BST.Root).
+                ForEach(node => Console.Write($"{node, -3} "));
 
 
             Console.ReadKey();
