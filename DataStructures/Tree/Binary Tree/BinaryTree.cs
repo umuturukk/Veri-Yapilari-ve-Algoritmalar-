@@ -56,6 +56,7 @@ namespace DataStructures.Tree.Binary_Tree
             }
             return list;
         }
+       
         public List<Node<T>> PreOrder(Node<T> root) // PreOrder (Data-Left-Right) dolaşma işlemini gerçekleştirecek olan fonksiyon.
         {
             if (!(root == null)) // Root ifadesi null olmadığı sürece dolaşmaya devam et.
@@ -66,6 +67,27 @@ namespace DataStructures.Tree.Binary_Tree
             }
             return list;
         }
+        public List<Node<T>> PreOrderNonRecursiveTraversal(Node<T> root)
+        {
+            var list = new List<Node<T>>();
+            var S = new Stack<Node<T>>();
+            if (root == null)
+                throw new Exception("This tree is empty.");
+
+            S.Push(root);
+            while (!(S.Count == 0))
+            {
+                var temp = S.Pop();
+                list.Add(temp);
+                if (temp.Right != null)             
+                    S.Push(temp.Right);
+                if (temp.Left != null)
+                    S.Push(temp.Left); 
+            }
+            return list;
+            
+        }
+
         public List<Node<T>> PostOrder(Node<T> root) // PostOrder (Left-Right-Data) dolaşma işlemini gerçekleştirecek olan fonksiyon.
         {
             if(!(root == null))
@@ -76,6 +98,28 @@ namespace DataStructures.Tree.Binary_Tree
             }
             return list;
         }
+        public List<Node<T>> PostOrderNonRecursiveTraversal(Node<T> root)
+        {
+            throw new NotImplementedException();
+        }
+
+        public  List<Node<T>> LevelOrderNonRecursiveTraversal(Node<T> root)
+        {
+            var list = new List<Node<T>>(); // Döngü bittiğinde düğümlerin listesini döneceğimiz listenin tanımı yapıldı.
+            var Q = new Queue<Node<T>>(); // T olarak node tutan Queue tanımı yapıldı.
+            Q.Enqueue(root); // Kuyruğa root düğümünü ekledik. (İlk seviye(1.Seviye))
+            while (Q.Count > 0) // Kuyrukta eleman olduğu sürece;
+            {
+                var temp = Q.Dequeue(); // Kuyruktaki elemanı çıkar ve temp değişkenine ata.
+                list.Add(temp); // temp değişkenini listeye ekle.
+                if (temp.Left != null) // temp'in solu null değil ise;
+                    Q.Enqueue(temp.Left); // temp'in solundaki düğümü kuyruğa ekle
+                if (temp.Right != null)
+                    Q.Enqueue(temp.Right);         
+            }
+            return list;
+        }
+
         public void ClearList() => list.Clear();
 
     }

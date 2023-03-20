@@ -15,12 +15,16 @@ namespace Apps
 
             var bt = new BinaryTree<int>();
 
-            bt.InOrder(BST.Root)
+            bt.PreOrder(BST.Root)
                 .ForEach(node => Console.Write($"{node, -3} "));
          
             Console.WriteLine();
-            bt.InOrderNonRecursiveTraversal(BST.Root).
+            bt.PreOrderNonRecursiveTraversal(BST.Root).
                 ForEach(node => Console.Write($"{node, -3} "));
+
+            Console.WriteLine("\nLevel Order Traversal\n");
+            bt.LevelOrderNonRecursiveTraversal(BST.Root).
+                ForEach(node => Console.Write($"{node,-3} "));
 
 
             Console.ReadKey();
