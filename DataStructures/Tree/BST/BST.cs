@@ -2,10 +2,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 
 namespace DataStructures.Tree.BST
 {
@@ -80,6 +82,71 @@ namespace DataStructures.Tree.BST
             
         }
 
+        // Minimum Elemanı Bulma
+        public Node<T> FindMin(Node<T> root) // Geriye Node döndüren ve root düğümünü referans alarak minimum elemanı bulan metod.
+        {
+            var current = root;
+            while (!(current.Left == null)) // current'ın solu null olana kadar devam et.
+                current = current.Left; // current'ı her çevrimde current'ın solundaki düğüme eşitle.
+            return current; // en son current zaten ağacımızın en küçük elemanı olacaktır.           
+        }
+
+        // Maximum Elemanı Bulma
+        public Node<T> FindMax(Node<T> root)
+        {
+            var current = root;
+            while (!(current.Right == null))
+                current = current.Right;
+            return current;
+        }
+
+        // Verilen spesifik bir değere özgü bulma işlemi.
+        public Node<T> Find(Node<T> root, T key) // Verilen bir parametreye ait düğümün tutmuş olduğu değeri bulan metod.
+        {
+            var current = root;
+            // key, current value'ya eşit olmadığı sürece döngüye devam et.
+            while (key.CompareTo(current.Value) != 0) // Generic ifadelerde(T) metot üzerinden karşılaştırma yapılmalıdır.
+            {
+                if (key.CompareTo(current.Value) < 0) // Anahtar değer karşılaştırma yapılan değerden küçük mü?
+                    current = current.Left; // key < current.value ise current artık current'ın sağındaki düğüme eşit olur.
+                else
+                    current = current.Right;
+                if (current == null)
+                    // throw new Exception("Could not found!");                          
+                    return default(Node<T>);
+            }
+            return current;
+        }
+
+        // Silme İşlemi
+        public Node<T> Remove(Node<T> root, T key) // Geriye Node<T> şeklinde generic bir ifade döndüren, referans olarak root düğümünü alan ve key olarak silinecek elemanı alan metod.
+        {
+            if (root == null) // Eğer root null bir değerse;   
+                return root;
+
+            // Rekürsif ilerle
+            if (key.CompareTo(root.Value) < 0) // Eğer anahtar değeri ilgili current değerinden küçükse           
+                root.Left = Remove(root.Left, key);
+            
+            else if(key.CompareTo(root.Value) > 0)           
+                root.Right = Remove(root.Right, key);
+            
+            else
+            {
+                // Silme işlevini uygulayabiliriz. Çünkü küçüklük büyüklük durumunu üstteki if elif yapılarında ele almıştık.
+                // Tek çocuklu veya çocuksuz ise
+                if (root.Left == null)
+                    return root.Right;
+                else if (root.Right == null)                
+                    return root.Left;
+
+                // İki çocuk var ise
+                root.Value = FindMin(root.Right).Value;
+                root.Right = Remove(root.Right, root.Value);               
+            }
+            return root;
+
+        }
 
 
     }

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections;
-using System.Net.WebSockets;
 using DataStructures.Tree.BST;
 using DataStructures.Tree.Binary_Tree;
+using DataStructures.Tree.BinaryTree;
 
 namespace Apps
 {
@@ -11,27 +11,45 @@ namespace Apps
     {
         static void Main(string[] args)
         {
-            var BST = new DataStructures.Tree.BST.BST<int>(new int[] { 23, 16, 45, 3, 22, 37, 99 });
-
-            var bt = new BinaryTree<int>();
-
-            bt.PreOrder(BST.Root)
-                .ForEach(node => Console.Write($"{node, -3} "));
-         
-            Console.WriteLine();
-            bt.PreOrderNonRecursiveTraversal(BST.Root).
-                ForEach(node => Console.Write($"{node, -3} "));
-
-            Console.WriteLine("\nLevel Order Traversal\n");
-            bt.LevelOrderNonRecursiveTraversal(BST.Root).
-                ForEach(node => Console.Write($"{node,-3} "));
-
+            var bst = new BST<int>(new int[] { 23, 16, 45, 3, 22, 37, 99 });
+            
+            Console.WriteLine($"Number of leafs : {BinaryTree<int>.NumberOfLeafs(bst.Root)}");
 
             Console.ReadKey();
         }
 
+        private static void BSTCalisma()
+        {
+            var BST = new DataStructures.Tree.BST.BST<int>(new int[] { 60, 40, 70, 20, 45, 65, 85 });
 
+            var bt = new BinaryTree<int>();
 
+            bt.InOrder(BST.Root)
+                .ForEach(node => Console.Write($"{node,-3} "));
+
+            BST.Remove(BST.Root, 20);
+            BST.Remove(BST.Root, 40);
+            BST.Remove(BST.Root, 60);
+            Console.WriteLine();
+
+            bt.ClearList();
+            bt.InOrder(BST.Root)
+                .ForEach(node => Console.Write($"{node,-3} "));
+
+            /*
+            Console.WriteLine("Level Order Traversal\n");
+            bt.LevelOrderNonRecursiveTraversal(BST.Root).
+                ForEach(node => Console.Write($"{node,-3} "));
+            */
+            /*
+            Console.WriteLine("\nMinimum Maksimum Elemanlar\n");
+            Console.WriteLine($"Minimum value: {BST.FindMin(BST.Root)}");
+            Console.WriteLine($"Maximum value: {BST.FindMax(BST.Root)}");
+            
+            var keyNode = BST.Find(BST.Root, 100);
+            Console.WriteLine($"{keyNode.Value} - Left: {keyNode.Left.Value} - Right: {keyNode.Right.Value}");
+            */
+        }
         private static void GenericDiziIslemleri()
         {
             var arr = new DataStructures.Array.Array<int>();

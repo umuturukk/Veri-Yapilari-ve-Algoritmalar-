@@ -11,6 +11,8 @@ namespace DataStructures.Tree.Binary_Tree
 {
     public class BinaryTree<T> where T: IComparable // IComparable kontratını kabul eden ikili ağaç sınıfı oluşturduk.
     {
+        public Node<T> Root { get; set; }
+
         public List<Node<T>> list { get; private set; }// Node listesi oluşturduk.
         public BinaryTree() // Default constructor.
         {
@@ -122,5 +124,71 @@ namespace DataStructures.Tree.Binary_Tree
 
         public void ClearList() => list.Clear();
 
+        // Maksimum Derinliği Bulan Metod
+        public static int MaxDepth(Node<T> root)
+        {
+            if (root == null)
+                return 0;
+            int leftDepth = MaxDepth(root.Left);
+            int rightDepth = MaxDepth(root.Right);
+            
+            return (leftDepth > rightDepth) ? 
+                leftDepth + 1: rightDepth + 1;
+        }
+
+        // En Derin Düğümü Bulan Metod (En son eklenen düğüm)
+        public Node<T> DeepestNode(Node<T> root)
+        {
+            Node<T> temp = null;
+            if (root == null) throw new Exception("Empty Tree!");
+
+            var q = new Queue<Node<T>>();
+
+            q.Enqueue(root);
+            while (q.Count > 0)
+            {
+                temp = q.Dequeue();
+                if (temp.Left != null)
+                    q.Enqueue(temp.Left);
+                if (temp.Right != null)
+                    q.Enqueue(temp.Right);
+            }
+            return temp;
+            
+        }
+        public Node<T> DeepestNode()
+        {
+            var list = LevelOrderNonRecursiveTraversal(Root);
+            return list[list.Count - 1];
+        }
+
+        // Ağaç üzerindeki bir düğümün hem sağ hem de sol işaretçisi null olarak tanımlanabiliyor ise o yapraktır.
+        public static int NumberOfLeafs(Node<T> root)
+        {
+            
+            int count = 0; // sonunda dönülecek olan sayaç.
+            if (root == null) return count; // root null bir değer ise sayacın o anki değerini(0) dön.
+            var q = new Queue<Node<T>>(); // q adı verdiğimiz bir kuyruk tanımı yaptık.
+            q.Enqueue(root); // Kuyruğa ilk eleman olarak root düğümünü vermiş olduk.
+            while (q.Count > 0) // Kuyruğun eleman sayısı 0'dan büyük olduğu sürece döngü devam etsin.
+            {
+                var temp = q.Dequeue(); // Geçici değişken olarak kuyruktan çıkardığımız 1.sıradaki düğümü atadık.
+                if (temp.Left == null && temp.Right == null) // Geçici değişkenin hem sağ hem sol işaretçisi null ise bu bir yapraktır.
+                    count++;
+                if (temp.Left != null)
+                    q.Enqueue(temp.Left);
+                if (temp.Right != null)
+                    q.Enqueue(temp.Right);
+            }
+            return count;
+
+            /*
+            return new BinaryTree<T>()
+                .LevelOrderNonRecursiveTraversal(root)
+                .Where(x => x.Left == null && x.Right == null)
+                .ToList()
+                .Count;
+            */
+        }
     }
 }
