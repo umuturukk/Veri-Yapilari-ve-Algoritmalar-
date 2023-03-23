@@ -26,13 +26,15 @@ namespace DataStructures.Tree.BST
             foreach (var item in collection)            
                 Add(item);       
         }
+        
         public IEnumerator<T> GetEnumerator()
         {
-            throw new NotImplementedException();
+            return new BSTEnumerator<T>(Root);
         }
+        
         IEnumerator IEnumerable.GetEnumerator()
         {
-            throw new NotImplementedException();
+            return GetEnumerator();
         }
 
         // Ağaca ekleme işlemini gerçekleştireceğimiz fonksiyon.

@@ -190,5 +190,54 @@ namespace DataStructures.Tree.Binary_Tree
                 .Count;
             */
         }
+
+        // Tam ve yarım düğüm sayısını bulma
+        public static int NumberOfFullNodes(Node<T> root) =>
+            new BinaryTree<T>().LevelOrderNonRecursiveTraversal(root)
+            .Where(node => node.Left != null && node.Right != null)
+            .ToList()
+            .Count;
+
+        public static int NumberOfHalfNodes(Node<T> root) =>
+            new BinaryTree<T>().LevelOrderNonRecursiveTraversal(root)
+            .Where(node => (node.Left != null && node.Right == null) || (node.Left == null && node.Right != null))
+            .ToList()
+            .Count;
+    
+        // Kökten yaprağa olan yolu yazdırma (örn: root - root.left - root.left.left)
+        public void PrintPaths(Node<T> root)
+        {
+            var path = new T[256];
+            PrintPaths(root, path, 0);
+        }
+
+        private void PrintPaths(Node<T> root, T[] path, int pathLen)
+        {
+            if (root == null)
+                return;
+            path[pathLen] = root.Value;
+            pathLen++;
+
+            if (root.Left == null && root.Right == null) // Bir yaprağın üzerinde olma koşulu
+            {
+                PrintArray(path, pathLen);
+            }
+            else
+            {
+                PrintPaths(root.Left, path, pathLen);
+                PrintPaths(root.Right, path, pathLen);
+            }
+            
+        }
+
+        private void PrintArray(T[] path, int len) // Bir dizinin içeriğini yazdıran metod.
+        {
+            for (int i = 0; i < len; i++)           
+                Console.Write($"{path[i]} ");
+            Console.WriteLine();
+        }
+
+
+
     }
 }
