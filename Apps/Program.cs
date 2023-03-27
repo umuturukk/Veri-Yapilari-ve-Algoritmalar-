@@ -11,12 +11,8 @@ namespace Apps
     {
         static void Main(string[] args)
         {
-            var bst = new BST<int>(new int[] { 23, 16, 45, 3, 22, 37, 99 });
+            Console.WriteLine("Aşkım Esinim.");
             
-            foreach (var node in bst)
-            {
-                Console.WriteLine(node);
-            }
 
             Console.ReadKey();
         }
