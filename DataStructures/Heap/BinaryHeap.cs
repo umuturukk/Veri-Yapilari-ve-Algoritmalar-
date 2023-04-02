@@ -127,8 +127,30 @@ namespace DataStructures.Heap
             return temp;
         }
 
-        protected void HeapifyUp() { }
-        protected void HeapifyDown() { }
+        protected void HeapifyUp()
+        {
+            var index = position - 1; 
+            while (!IsRoot(index) && comparer.Compare(Array[index], GetParent(index)) < 0) 
+            {
+                var parentIndex = GetParentIndex(index); 
+                Swap(parentIndex, index); 
+                index = parentIndex;
+            }
+        }
+        protected void HeapifyDown()
+        {
+            int index = 0;
+            while (HasLeftChild(index))
+            {
+                var smallerIndex = GetLeftChildIndex(index);
+                if (HasRightChild(index) && comparer.Compare(GetRightChild(index), GetLeftChild(index)) < 0)
+                smallerIndex = GetRightChildIndex(index);
+                if (comparer.Compare(Array[smallerIndex], Array[index]) >= 0)
+                    break;
+                Swap(smallerIndex, index);
+                index = smallerIndex;
+            }
+        }
 
         public IEnumerator<T> GetEnumerator()
         {
